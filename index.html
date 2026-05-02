@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>¡Feliz día de las madres!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Caveat', cursive;
+        }
+
+        body {
+            background-color: #F4F4F4;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            /* Imagen 1 ajustada a .JPG */
+            background-image: url("mayo/1.JPG");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .seccion-interactiva {
+            position: relative;
+            width: 100%;
+            min-height: 600px;
+            overflow: hidden;
+        }
+
+        .anime_background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 5;
+            padding: 20px;
+        }
+
+        @keyframes girarizquierda {
+            100% { transform: rotate(-360deg); }
+        }
+
+        @keyframes girarderecha {
+            100% { transform: rotate(360deg); }
+        }
+
+        .amarillo {
+            animation: girarizquierda 40s linear infinite;
+            transform-origin: 13px 25px;
+        }
+
+        .rosa {
+            animation: girarderecha 25s linear infinite;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        p {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .equipo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .info-row img {
+            width: 400px;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        .info-text {
+            max-width: 420px;
+            text-align: left;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 250px;
+            transition: transform 0.3s ease;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .polaroid .caption {
+            font-family: 'Parisienne', cursive;
+            font-size: 1.5rem;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .reveal:nth-child(odd) .polaroid { transform: rotate(-3deg); }
+        .reveal:nth-child(even) .polaroid { transform: rotate(3deg); }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05) !important;
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: auto;
+        }
+
+        .heart {
+            position: fixed;
+            top: -20px;
+            z-index: 9999;
+            animation: fall linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
+        }
+
+        #typewriter {
+            font-family: 'Lora', serif;
+            font-size: 20px;
+            line-height: 1.7;
+            color: #2c3e50;
+            font-style: italic;
+            margin-top: 40px;
+            min-height: 100px;
+            text-align: center;
+        }
+
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #9D8F8F;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 1s ease, visibility 1s;
+            cursor: pointer;
+        }
+
+        .sobre {
+            width: 250px;
+            height: 180px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #BCBAB8;
+        }
+
+        .sello img {
+            width: 60px;
+            animation: latido 1.5s infinite;
+        }
+
+        @keyframes latido {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #slider {
+            margin: 40px auto;
+            width: 800px;
+            max-width: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        #slider input[type="radio"] { display: none; }
+
+        #slides {
+            padding: 30px;
+            border: 3px solid #9D8F8F;
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #overflow {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #slides .inner {
+            transition: margin-left 800ms cubic-bezier(0.700, 0.000, 0.175, 1.000);
+            width: 1000%;
+            display: flex;
+        }
+
+        #slides .slide {
+            width: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            background-size: contain !important;
+            display: none;
+        }
+
+        .arrow:hover { opacity: 1; }
+
+        /* Iconos ajustados a .png */
+        .next { right: -70px; background: url("mayo/proximo.png") no-repeat center; }
+        .prev { left: -70px; background: url("mayo/copia.png") no-repeat center; }
+
+        #slide1:checked~.next-1, #slide2:checked~.next-2, #slide3:checked~.next-3,
+        #slide4:checked~.next-4, #slide5:checked~.next-5, #slide6:checked~.next-6,
+        #slide7:checked~.next-7, #slide8:checked~.next-8, #slide9:checked~.next-9,
+        #slide10:checked~.next-10 { display: block; }
+
+        #slide1:checked~.prev-1, #slide2:checked~.prev-2, #slide3:checked~.prev-3,
+        #slide4:checked~.prev-4, #slide5:checked~.prev-5, #slide6:checked~.prev-6,
+        #slide7:checked~.prev-7, #slide8:checked~.prev-8, #slide9:checked~.prev-9,
+        #slide10:checked~.prev-10 { display: block; }
+
+        #slide1:checked~#slides .inner { margin-left: 0; }
+        #slide2:checked~#slides .inner { margin-left: -100%; }
+        #slide3:checked~#slides .inner { margin-left: -200%; }
+        #slide4:checked~#slides .inner { margin-left: -300%; }
+        #slide5:checked~#slides .inner { margin-left: -400%; }
+        #slide6:checked~#slides .inner { margin-left: -500%; }
+        #slide7:checked~#slides .inner { margin-left: -600%; }
+        #slide8:checked~#slides .inner { margin-left: -700%; }
+        #slide9:checked~#slides .inner { margin-left: -800%; }
+        #slide10:checked~#slides .inner { margin-left: -900%; }
+
+        #bullets { text-align: center; margin: 20px 0 0; }
+        #bullets label {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 100%;
+            background: #9D8F8F;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        #slide1:checked~#bullets label:nth-child(1),
+        #slide2:checked~#bullets label:nth-child(2),
+        #slide3:checked~#bullets label:nth-child(3),
+        #slide4:checked~#bullets label:nth-child(4),
+        #slide5:checked~#bullets label:nth-child(5),
+        #slide6:checked~#bullets label:nth-child(6),
+        #slide7:checked~#bullets label:nth-child(7),
+        #slide8:checked~#bullets label:nth-child(8),
+        #slide9:checked~#bullets label:nth-child(9),
+        #slide10:checked~#bullets label:nth-child(10) { background: #BCBAB8; }
+
+        @media (max-width: 950px) {
+            .next { right: 10px; }
+            .prev { left: 10px; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sello ajustado a .png -->
+    <div id="splash-screen" onclick="abrirCarta()">
+        <div class="sobre">
+            <div class="sello"><img src="mayo/sello.png" alt="Sello"></div>
+            <p style="font-family: 'Caveat'; margin-top: 10px;">Haz clic para abrir</p>
+        </div>
+    </div>
+
+    <div class="hero reveal">
+        <div class="content" style="color: white;">
+            <h1 style="font-family: 'Parisienne', cursive; font-size: 3.5rem;">¡Feliz día a la mejor mamá!</h1>
+            <p style="font-family: 'Parisienne', cursive; color: white; font-size: 1.8rem;">¡Te quiero muchísimo!</p>
+        </div>
+    </div>
+
+    <div class="seccion-interactiva">
+        <!-- Puedes guardar el fondo como mayo/fondo.svg si lo llamas externamente, 
+             aquí se mantiene el código SVG interno que es más seguro para animaciones CSS -->
+        <svg class="anime_background" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <path d="m-261.39542,103.26596l0,0c0,-194.4063 159.38836,-352.00377 356.00381,-352.00377l0,0c94.41804,0 184.96904,37.08598 251.73266,103.09949c66.76369,66.01354 104.27115,155.54704 104.27115,248.90428l0,0c0,194.40627 -159.38836,352.00377 -356.00381,352.00377l0,0c-196.61543,0 -356.00381,-157.5975 -356.00381,-352.00377zm178.00191,0l0,0c0,97.20312 79.69423,176.00189 178.00191,176.00189c98.30775,0 178.00191,-78.79876 178.00191,-176.00189c0,-97.20312 -79.6942,-176.00189 -178.00191,-176.00189l0,0c-98.30768,0 -178.00191,78.79878 -178.00191,176.00189z" fill="#BCBAB8" class="amarillo" />
+            <path d="m487.83282,516.99041l0,0c0,-150.77533 138.3455,-273.0029 309.00329,-273.0029l0,0c81.95273,0 160.54897,28.76271 218.49828,79.96068c57.94938,51.19799 90.50501,120.63733 90.50501,193.04222l0,0c0,150.77531 -138.3455,273.0029 -309.00329,273.0029l0,0c-170.65777,0 -309.00329,-122.2276 -309.00329,-273.0029zm154.50165,0l0,0c0,75.38764 69.17279,136.50145 154.50165,136.50145c85.32892,0 154.50165,-61.11381 154.50165,-136.50145c0,-75.38764 -69.17277,-136.50145 -154.50165,-136.50145l0,0c-85.32885,0 -154.50165,61.11383 -154.50165,136.50145z" fill="#9D8F8F" class="rosa" />
+        </svg>
+
+        <div class="overlay-content">
+            <div class="equipo-section reveal">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 20px;">A la mamá más bonita</h2>
+                <div class="info-row reveal">
+                    <!-- Imagen 2 ajustada a .JPG -->
+                    <img src="mayo/2.JPG" alt="Mamá">
+                    <div class="info-text">
+                        <p>
+                            A esa mujer que acompaña y guía mis pasos, que hace que lo imposible se vuelva posible,
+                            esa mujer que a pesar de las circunstancias sabe salir adelante y dar lo mejor de sí,
+                            aquella persona que a pesar de mi comportamiento siempre me ha amado incondicionalmente,
+                            mi mamá, mi amiga y una de las mejores personas que conozco.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery">
+                <div class="reveal">
+                    <div class="polaroid">
+                        <!-- Imagen 3 ajustada a .JPG -->
+                        <img src="mayo/3.JPG">
+                        <p class="caption">Tan bella como siempre</p>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <div class="polaroid">
+                        <!-- Imagen 4 ajustada a .JPG -->
+                        <img src="mayo/4.JPG">
+                        <p class="caption">Siempre al lado de los que más quieres</p>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <div class="polaroid">
+                        <!-- Imagen 5 ajustada a .JPG -->
+                        <img src="mayo/5.JPG">
+                        <p class="caption">¡Feliz cumpleaños!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal" id="typewriter" style="max-width: 800px; margin: 40px auto;"></div>
+
+            <h2 style="text-align: center; margin-top: 50px;" class="reveal">¡Nunca dejes de reír!</h2>
+
+            <div id="slider" class="reveal">
+                <input type="radio" name="slider" id="slide1" checked>
+                <input type="radio" name="slider" id="slide2">
+                <input type="radio" name="slider" id="slide3">
+                <input type="radio" name="slider" id="slide4">
+                <input type="radio" name="slider" id="slide5">
+                <input type="radio" name="slider" id="slide6">
+                <input type="radio" name="slider" id="slide7">
+                <input type="radio" name="slider" id="slide8">
+                <input type="radio" name="slider" id="slide9">
+                <input type="radio" name="slider" id="slide10">
+
+                <!-- Flechas con lógica de radio buttons -->
+                <label for="slide10" class="arrow prev prev-1"></label>
+                <label for="slide1" class="arrow prev prev-2"></label>
+                <label for="slide2" class="arrow prev prev-3"></label>
+                <label for="slide3" class="arrow prev prev-4"></label>
+                <label for="slide4" class="arrow prev prev-5"></label>
+                <label for="slide5" class="arrow prev prev-6"></label>
+                <label for="slide6" class="arrow prev prev-7"></label>
+                <label for="slide7" class="arrow prev prev-8"></label>
+                <label for="slide8" class="arrow prev prev-9"></label>
+                <label for="slide9" class="arrow prev prev-10"></label>
+
+                <label for="slide2" class="arrow next next-1"></label>
+                <label for="slide3" class="arrow next next-2"></label>
+                <label for="slide4" class="arrow next next-3"></label>
+                <label for="slide5" class="arrow next next-4"></label>
+                <label for="slide6" class="arrow next next-5"></label>
+                <label for="slide7" class="arrow next next-6"></label>
+                <label for="slide8" class="arrow next next-7"></label>
+                <label for="slide9" class="arrow next next-8"></label>
+                <label for="slide10" class="arrow next next-9"></label>
+                <label for="slide1" class="arrow next next-10"></label>
+
+                <div id="slides">
+                    <div id="overflow">
+                        <div class="inner">
+                            <!-- Extensiones ajustadas según lista -->
+                            <div class="slide"><img src="mayo/6.JPG" style="width:100%; max-width:400px;"></div>
+                            <div class="slide"><img src="mayo/7.JPG" style="width:100%; max-width:400px;"></div>
+                            <div class="slide"><img src="mayo/8.JPG" style="width:100%; max-width:400px;"></div>
+                            <div class="slide"><img src="mayo/9.jpg" style="width:100%; max-width:400px;"></div>
+                            <div class="slide"><img src="mayo/10.jpg" style="width:100%; max-width:400px;"></div>
+                            <div class="slide"><img src="mayo/11.jpg" style="width:100%; max-width:400px;"></div>
+                            <div class="slide"><img src="mayo/12.JPG" style="width:100%; max-width:400px;"></div>
+                            <div class="slide"><img src="mayo/13.JPG" style="width:100%; max-width:400px;"></div>
+                            <div class="slide"><img src="mayo/14.jpg" style="width:100%; max-width:400px;"></div>
+                            <div class="slide"><img src="mayo/15.jpg" style="width:100%; max-width:400px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="bullets">
+                    <label for="slide1"></label>
+                    <label for="slide2"></label>
+                    <label for="slide3"></label>
+                    <label for="slide4"></label>
+                    <label for="slide5"></label>
+                    <label for="slide6"></label>
+                    <label for="slide7"></label>
+                    <label for="slide8"></label>
+                    <label for="slide9"></label>
+                    <label for="slide10"></label>
+                </div>
+            </div>
+            <p style="text-align: center;">Te amo muchísimo</p>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            // Pétalo ajustado a .webp
+            heart.innerHTML = '<img src="mayo/petalo.webp" style="width: 40px;">';
+            heart.style.left = Math.random() * 100 + "vw";
+            const duration = Math.random() * 3 + 2 + "s";
+            heart.style.animationDuration = duration;
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+
+        function abrirCarta() {
+            const splash = document.getElementById('splash-screen');
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.visibility = 'hidden';
+                checkReveal();
+            }, 1000);
+        }
+
+        function checkReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(reveal => {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveal.getBoundingClientRect().top;
+                if (revealTop < windowHeight - 100) {
+                    reveal.classList.add('active');
+                    if (reveal.id === "typewriter" && i === 0) { escribir(); }
+                }
+            });
+        }
+        window.addEventListener('scroll', checkReveal);
+
+        const texto = "Gracias por ser esa persona que siempre me ha apoyado y estado a mi lado,\npuede que no siempre lo diga pero te amo infinitamente,\ngracias por cada sacrificio, tu esfuerzo, por cada caricia en el momento justo,\npor cada enseñanza que me hizo ser quien soy,\npor celebrar todos mis logros como si fueran tuyos,\ny sobre todo por darme la vida.\n\nGracias por haberme cuidado, amado y aceptado desde el día en el que nací\na pesar de que tu pudiste vivir 25 años sin mí,\nyo no me imagino una vida en la que tu no estés,\ngracias por ser mi mamá, mi amiga y mi compañera de vida, te amo con todo mi corazón.";
+        let i = 0;
+        function escribir() {
+            if (i < texto.length) {
+                document.getElementById("typewriter").innerHTML += (texto.charAt(i) === "\n" ? "<br>" : texto.charAt(i));
+                i++;
+                setTimeout(escribir, 40);
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Parisienne&family=Lora:ital,wght@0,400..700;1,400..700&family=Quicksand:wght@300..700&family=Caveat&display=swap" rel="stylesheet">
+</body>
+
+</html>
